@@ -40,6 +40,34 @@ void viewEvents(vector<Events> &events)
     {
         events[i].viewEvent();
     }
+    cout << "Please select one of the following options:\n";
+    cout << "1. Return to Menu\n";
+    cout << "2. Update event details\n";
+    cout << "3. Validate event requirements\n";
+    int choice, id;
+    cin >> choice;
+    switch (choice)
+    {
+    case (1):
+        return;
+    case (2):
+        cout << "Enter event ID number: ";
+        cin >> id;
+        events[id - 1].updateDetails();
+        break;
+    case (3):
+        cout << "Enter event ID number: ";
+        cin >> id;
+        if (events[id - 1].validateRequirements())
+        {
+            cout << "Event requirements are valid." << endl;
+        }
+        else
+        {
+            cout << "Event requirements are not valid." << endl;
+        }
+        break;
+    }
 }
 void viewFacilities()
 {
