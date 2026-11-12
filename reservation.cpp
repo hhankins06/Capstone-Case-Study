@@ -83,7 +83,7 @@ void Reservation::submit()
 	date.tm_mday = day;
 	date.tm_hour = hour;
 	mktime(&date);
-	startTime = date;
+	endTime = date;
 
 	status = "pending";
 	approved = false;
@@ -153,7 +153,7 @@ void Reservation::modify()
 		date.tm_mday = day;
 		date.tm_hour = hour;
 		mktime(&date);
-		startTime = date;
+		endTime = date;
 		break;
 	case 3:
 		cout << "Please input the new facility ID for the facility your reservation will be in:\n";
