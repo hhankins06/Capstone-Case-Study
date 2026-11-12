@@ -4,7 +4,7 @@
 #include "Facility.h"
 #include "Reservation.h"
 
-void printFacilityInfo(Facility& facility) 
+void printFacilityInfo(Facility &facility)
 {
     std::cout << "Facility ID : " << facility.facilityID << "\n";
     std::cout << "Name        : " << facility.facilityName << "\n";
@@ -14,22 +14,22 @@ void printFacilityInfo(Facility& facility)
     std::cout << "Approved    : " << (facility.approved ? "Yes" : "No") << "\n";
 }
 
-std::string formatTime(std::time_t t) 
+std::string formatTime(std::time_t t)
 {
     char buffer[26];
-    std::tm* tm_info = std::localtime(&t);
+    std::tm *tm_info = std::localtime(&t);
     std::strftime(buffer, 26, "%Y-%m-%d %H:%M", tm_info);
     return std::string(buffer);
 }
-
-int main() 
+/*
+int main()
 {
     // Sample facility
     Facility lab(505, "AM Lab", "Electrical Engineering Building, 5th Floor", 35, "This facility combines music and electricity, with guitars to utilize.", true);
 
     int choice = 0;
 
-    while (choice != 5) 
+    while (choice != 5)
     {
         std::cout << "S&T Facility Management\n";
         std::cout << "1. View Facility Details\n";
@@ -38,8 +38,8 @@ int main()
         std::cout << "4. Check Availability\n";
         std::cout << "5. Exit\n";
         std::cout << "Please select an option: ";
-        
-        if (!(std::cin >> choice)) 
+
+        if (!(std::cin >> choice))
         {
             std::cin.clear();
             std::cin.ignore(10000, '\n');
@@ -47,7 +47,7 @@ int main()
             continue;
         }
 
-        switch (choice) 
+        switch (choice)
         {
             case 1:
                 printFacilityInfo(lab);
@@ -57,17 +57,17 @@ int main()
                 lab.updateDetails();
                 break;
 
-            case 3: 
+            case 3:
             {
                 std::cout << "\nSchedule for " << lab.facilityName << "\n";
                 std::vector<Reservation> schedule = lab.viewSchedule();
-                if (schedule.empty()) 
+                if (schedule.empty())
                 {
                     std::cout << "No reservations found.\n";
-                } 
-                else 
+                }
+                else
                 {
-                    for (auto& res : schedule) 
+                    for (auto& res : schedule)
                     {
                         std::cout << "Booking #" << res.reservationId << " has been reserved from " << formatTime(res.startTime) << " to " << formatTime(res.endTime) << "\n";
                     }
@@ -75,7 +75,7 @@ int main()
                 break;
             }
 
-            case 4: 
+            case 4:
             {
                 int startOffsetHours, durationHours;
                 std::cout << "Enter the start time in terms of hours from now: ";
@@ -90,11 +90,11 @@ int main()
 
                 std::cout << "Checking window: " << formatTime(reqStart) << " -> " << formatTime(reqEnd) << "...\n";
 
-                if (lab.checkAvailability(reqStart, reqEnd)) 
+                if (lab.checkAvailability(reqStart, reqEnd))
                 {
                     std::cout << "This facility is available!\n";
-                } 
-                else 
+                }
+                else
                 {
                     std::cout << "Unfortunately, this facility is unavailable.\n";
                 }
@@ -112,3 +112,5 @@ int main()
 
     return 0;
 }
+*/
+// copied over to main.cpp

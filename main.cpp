@@ -1,27 +1,12 @@
 
 #include "equipmentRequest.h"
 #include "events.h"
+#include "user.h"
+#include "facility.h"
 #include <iostream>
 #include <vector>
 using namespace std;
 
-void printLogin()
-{
-    cout << "Welcome to the Smart Campus Event & Facility Booking System!\n";
-    string user, pass;
-    for (int i = 0; i < 3; ++i)
-    {
-        cout << "Please enter your username: ";
-        getline(cin, user);
-        cout << "\nPlease enter your password: ";
-        getline(cin, pass);
-        // if (userExists && passCorrect)
-        //{
-        cout << "\nSuccessfully logged in.\n";
-        break;
-        //}
-    }
-}
 void printMenu()
 {
     cout << "=======================\n";
@@ -69,9 +54,107 @@ void viewEvents(vector<Events> &events)
         break;
     }
 }
-void viewFacilities()
+void printFacilityInfo(Facility &facility)
 {
-    // FIXME
+    std::cout << "Facility ID : " << facility.facilityID << "\n";
+    std::cout << "Name        : " << facility.facilityName << "\n";
+    std::cout << "Location    : " << facility.getLocation() << "\n";
+    std::cout << "Capacity    : " << facility.getCapacity() << " people\n";
+    std::cout << "Description : " << facility.getDescription() << "\n";
+    std::cout << "Approved    : " << (facility.approved ? "Yes" : "No") << "\n";
+}
+
+std::string formatTime(std::time_t t)
+{
+    char buffer[26];
+    std::tm *tm_info = std::localtime(&t);
+    std::strftime(buffer, 26, "%Y-%m-%d %H:%M", tm_info);
+    return std::string(buffer);
+}
+void viewFacilities(Facility &lab)
+{
+    int choice = 0;
+
+    while (choice != 5)
+    {
+        std::cout << "S&T Facility Management\n";
+        std::cout << "1. View Facility Details\n";
+        std::cout << "2. Update Facility Details\n";
+        std::cout << "3. View Current Schedule\n";
+        std::cout << "4. Check Availability\n";
+        std::cout << "5. Exit\n";
+        std::cout << "Please select an option: ";
+
+        if (!(std::cin >> choice))
+        {
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
+            std::cout << "Sorry, this input is invalid. Please enter a number 1-5.\n";
+            continue;
+        }
+
+        switch (choice)
+        {
+        case 1:
+            printFacilityInfo(lab);
+            break;
+
+        case 2:
+            lab.updateDetails();
+            break;
+
+        case 3:
+        {
+            std::cout << "\nSchedule for " << lab.facilityName << "\n";
+            std::vector<Reservation> schedule = lab.viewSchedule();
+            if (schedule.empty())
+            {
+                std::cout << "No reservations found.\n";
+            }
+            else
+            {
+                for (auto &res : schedule)
+                {
+                    std::cout << "Booking #" << res.reservationId << " has been reserved from " << formatTime(res.startTime) << " to " << formatTime(res.endTime) << "\n";
+                }
+            }
+            break;
+        }
+
+        case 4:
+        {
+            int startOffsetHours, durationHours;
+            std::cout << "Enter the start time in terms of hours from now: ";
+            std::cin >> startOffsetHours;
+            std::cout << "Enter duration in hours: ";
+            std::cin >> durationHours;
+
+            // 3600 seconds per hour -- which is how this one worksss
+            std::time_t now = std::time(nullptr);
+            std::time_t reqStart = now + (startOffsetHours * 3600);
+            std::time_t reqEnd = reqStart + (durationHours * 3600);
+
+            std::cout << "Checking window: " << formatTime(reqStart) << " -> " << formatTime(reqEnd) << "...\n";
+
+            if (lab.checkAvailability(reqStart, reqEnd))
+            {
+                std::cout << "This facility is available!\n";
+            }
+            else
+            {
+                std::cout << "Unfortunately, this facility is unavailable.\n";
+            }
+            break;
+        }
+
+        case 5:
+            std::cout << "Exiting!\n";
+            break;
+
+        default:
+            std::cout << "Invalid option. Try again.\n";
+        }
+    }
 }
 void viewReservations()
 {
@@ -128,6 +211,8 @@ int main()
 
     // Variable Declaration
     // Basic testing input to verify system function
+    User user1(1, "John Doe", "johndoe@mst.edu", "123", "student");
+
     vector<Events> events;
     events.push_back(Events(1, "Craft Night", "Painting and embroidery", 50, "RSO"));
     events.push_back(Events(2, "AI Lecture", "Previous student speaks on AI in workforce", 150, "Faculty"));
@@ -137,7 +222,31 @@ int main()
     requests.push_back(EquipmentRequest(1, "Ladder", 1));
     requests.push_back(EquipmentRequest(2, "Lights", 5));
 
-    printLogin();
+    Facility lab(505, "AM Lab", "Electrical Engineering Building, 5th Floor", 35, "This facility combines music and electricity, with guitars to utilize.", true);
+
+    cout << "Welcome to the Smart Campus Event & Facility Booking System!\n";
+    string email, pass;
+    bool loggedIn = false;
+    for (int i = 0; i < 3; ++i)
+    {
+        cout << "Please enter your email: ";
+        getline(cin, email);
+        cout << "\nPlease enter your password: ";
+        getline(cin, pass);
+        if (user1.login(email, pass))
+        {
+            cout << "\nSuccessfully logged in.\n";
+            loggedIn = true;
+            break;
+        }
+        cout << "\nIncorrect username or password.\n";
+    }
+    if (!loggedIn)
+    {
+        cout << "You have exceeded 3 password attempts.\n";
+        exit(0);
+    }
+
     while (choice != 6)
     {
         printMenu();
@@ -148,7 +257,7 @@ int main()
             viewEvents(events);
             break;
         case 2:
-            viewFacilities();
+            viewFacilities(lab);
             break;
         case 3:
             viewReservations();

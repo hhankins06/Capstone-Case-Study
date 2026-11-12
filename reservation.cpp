@@ -22,16 +22,16 @@ Reservation::~Reservation()
 {
 }
 
-//Submit new reservation 
+// Submit new reservation
 void Reservation::submit()
 {
 	cout << "To submit a new reservation, you will need to input the desired start and end times for the reservation, the facility ID for the desired facility, and a unique reservation ID.\n Input each value as it is requested.\n";
-	createdAt = std::time_t time(std::time_t * date);
+	createdAt = time(nullptr); // automatically gets current system time
 
 	int id;
 	int facId;
-	struct tm date;
-	tm time = { 0 };
+	struct tm date = {};
+	// tm time = {0};
 
 	cout << "Please input the reservation ID for your reservation as an integer:\n";
 	cin >> id;
@@ -46,37 +46,45 @@ void Reservation::submit()
 	cout << "Please input the components of the start time for your reservation:\n";
 	cout << "Year:\n";
 	cin >> date.tm_year;
+	date.tm_year -= 1900; // since tm_year expects years since 1900
 	cout << "Month:\n";
 	cin >> date.tm_mon;
+	date.tm_mon -= 1; // since tm_month expects months starting at 0
 	cout << "Day:\n";
 	cin >> date.tm_mday;
 	cout << "Hour:\n";
 	cin >> date.tm_hour;
 
-	mktime(&date);
-	startTime = date;
+	// mktime(&date);
+	date.tm_isdst = -1;
+	startTime = mktime(&date);
+
+	date = {};
 
 	cout << "Please input the end time for your reservation:\n";
 
 	cout << "Please input the components of the end time for your reservation:\n";
 	cout << "Year:\n";
 	cin >> date.tm_year;
+	date.tm_year -= 1900;
 	cout << "Month:\n";
 	cin >> date.tm_mon;
+	date.tm_mon -= 1;
 	cout << "Day:\n";
 	cin >> date.tm_mday;
 	cout << "Hour:\n";
 	cin >> date.tm_hour;
 
-	mktime(&date);
-	endTime = date;
+	// mktime(&date);
+	date.tm_isdst = -1;
+	endTime = mktime(&date);
 
 	status = "pending";
 	approved = false;
 	cout << "Your reservation has been created!\n";
 }
 
-//Modify reservation details
+// Modify reservation details
 void Reservation::modify()
 {
 	cout << "What reservation would you like to modify? Please enter the reservation ID and the facility ID for your reservation: \n";
@@ -91,7 +99,7 @@ void Reservation::modify()
 	int num;
 	int facId;
 	struct tm date;
-	tm time = { 0 };
+	tm time = {0};
 
 	cin >> num;
 	switch (num)
@@ -102,15 +110,18 @@ void Reservation::modify()
 		cout << "Please input the components of the start time for your reservation:\n";
 		cout << "Year:\n";
 		cin >> date.tm_year;
+		date.tm_year -= 1900;
 		cout << "Month:\n";
 		cin >> date.tm_mon;
+		date.tm_mon -= 1;
 		cout << "Day:\n";
 		cin >> date.tm_mday;
 		cout << "Hour:\n";
 		cin >> date.tm_hour;
 
-		mktime(&date);
-		startTime = date;
+		// mktime(&date);
+		date.tm_isdst = -1;
+		startTime = mktime(&date);
 		break;
 	case 2:
 		cout << "Please input the end time for your reservation:\n";
@@ -118,15 +129,18 @@ void Reservation::modify()
 		cout << "Please input the components of the end time for your reservation:\n";
 		cout << "Year:\n";
 		cin >> date.tm_year;
+		date.tm_year -= 1900;
 		cout << "Month:\n";
 		cin >> date.tm_mon;
+		date.tm_mon -= 1;
 		cout << "Day:\n";
 		cin >> date.tm_mday;
 		cout << "Hour:\n";
 		cin >> date.tm_hour;
 
-		mktime(&date);
-		endTime = date;
+		// mktime(&date);
+		date.tm_isdst = -1;
+		endTime = mktime(&date);
 		break;
 	case 3:
 		cout << "Please input the new facility ID for the facility your reservation will be in:\n";
@@ -136,10 +150,9 @@ void Reservation::modify()
 	}
 
 	cout << "Your reservation has been updated.\n";
-
 }
 
-//Cancel reservations
+// Cancel reservations
 void Reservation::cancel()
 {
 	cout << "Would you like to cancel your reservation? (y/n)\n";
@@ -167,7 +180,7 @@ void Reservation::cancel()
 	}
 }
 
-//Change status of reservation
+// Change status of reservation
 void Reservation::updateStatus()
 {
 	cout << "Is this reservation approved? (y/n)\n";
