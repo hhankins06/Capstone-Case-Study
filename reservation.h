@@ -1,22 +1,36 @@
+// This is the header file for reservation.cpp
+
 #ifndef RESERVATION_H
+
 #define RESERVATION_H
 
 #include <string>
 #include <ctime>
 
-class Reservation 
+//Class declaration
+class Reservation
 {
-public:
+private:
+    std::time_t createdAt;
     int reservationId;
     int facilityId;
+    bool approved;
+
+public:
+    std::string status;
     std::time_t startTime;
     std::time_t endTime;
 
-    Reservation(int id, int facId, std::time_t start, std::time_t end): 
-        reservationId(id), 
-        facilityId(facId), 
-        startTime(start), 
-        endTime(end) {}
+    //Constructor and Destructor
+    Reservation(std::time_t createdAt, int reservationId, int facilityId, std::string status, std::time_t startTime, std::time_t endTime);
+    ~Reservation();
+
+    //Functions
+    void submit();
+    void modify();
+    void cancel();
+    void updateStatus();
 };
 
-#endif // RESERVATION_H
+
+#endif
