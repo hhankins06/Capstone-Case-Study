@@ -22,7 +22,7 @@ public:
     std::time_t endTime;
 
     //Constructor and Destructor
-    Reservation(int id, int facId, std::time_t start, std::time_t end);
+    Reservation(int id, int facId, std::time_t start, std::time_t end, std::time_t created);
     ~Reservation();
 
     //Functions

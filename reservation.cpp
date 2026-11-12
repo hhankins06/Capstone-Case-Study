@@ -1,19 +1,19 @@
 // reservation.cpp, this file references reservation.h
 
 #include <iostream>
-#include "reservation.h"
 #include <string>
 #include <ctime>
+#include "reservation.h"
 
 using namespace std;
 
-Reservation::Reservation(int id, int facId, std::time_t start, std::time_t end)
+Reservation::Reservation(int id, int facId, std::time_t start, std::time_t end, std::time_t created)
 {
-	createdAt =
+	createdAt = created;
 	reservationId = id;
 	facilityId = facId;
-	startTime =
-	endTime =
+	startTime = start;
+	endTime = end;
 	status = "pending";
 	approved = false;
 }
@@ -25,7 +25,69 @@ Reservation::~Reservation()
 //Submit new reservation 
 void Reservation::submit()
 {
-	cout << "To submit a new reservation, you will need "
+	cout << "To submit a new reservation, you will need to input the desired start and end times for the reservation, the facility ID for the desired facility, and a unique reservation ID.\n Input each value as it is requested.\n";
+	std::time_t time(std::time_t * date);
+	createdAt = date;
+
+	int id;
+	int facId;
+	int hour;
+	int day;
+	int month;
+	int year;
+	struct tm date;
+
+	cout << "Please input the reservation ID for your reservation as an integer:\n"
+	cin >> id;
+	reservationId = id;
+
+	cout << "Please input the facility ID for the facility your reservation will be in:\n";
+	cin >> facId;
+	facilityId = facId;
+
+	cout << "Please input the start time for your reservation:\n";
+
+	cout << "Please input the components of the start time for your reservation:\n";
+	cout << "Year:\n";
+	cin >> year;
+	cout << "Month:\n";
+	cin >> month;
+	cout << "Day:\n";
+	cin >> day;
+	cout << "Hour:\n";
+	cin >> hour;
+
+	// Time struct definitions
+	date.tm_year = year;
+	date.tm_mon = month;
+	date.tm_mday = day;
+	date.tm_hour = hour;
+	mktime(&date);
+	startTime = date;
+
+	cout << "Please input the end time for your reservation:\n";
+
+	cout << "Please input the components of the end time for your reservation:\n";
+	cout << "Year:\n";
+	cin >> year;
+	cout << "Month:\n";
+	cin >> month;
+	cout << "Day:\n";
+	cin >> day;
+	cout << "Hour:\n";
+	cin >> hour;
+
+	// Time struct definitions
+	date.tm_year = year;
+	date.tm_mon = month;
+	date.tm_mday = day;
+	date.tm_hour = hour;
+	mktime(&date);
+	startTime = date;
+
+	status = "pending";
+	approved = false;
+	cout << "Your reservation has been created!\n";
 }
 
 //Modify reservation details
@@ -42,18 +104,65 @@ void Reservation::modify()
 
 	int num;
 	int facId;
-
+	int hour;
+	int day;
+	int month;
+	int year;
+	struct tm date;
 
 	cin >> num;
 	switch (num)
 	{
 	case 1:
+		cout << "Please input the start time for your reservation:\n";
 
+		cout << "Please input the components of the start time for your reservation:\n";
+		cout << "Year:\n";
+		cin >> year;
+		cout << "Month:\n";
+		cin >> month;
+		cout << "Day:\n";
+		cin >> day;
+		cout << "Hour:\n";
+		cin >> hour;
+
+		// Time struct definitions
+		date.tm_year = year;
+		date.tm_mon = month;
+		date.tm_mday = day;
+		date.tm_hour = hour;
+		mktime(&date);
+		startTime = date;
+		break;
 	case 2:
+		cout << "Please input the end time for your reservation:\n";
 
+		cout << "Please input the components of the end time for your reservation:\n";
+		cout << "Year:\n";
+		cin >> year;
+		cout << "Month:\n";
+		cin >> month;
+		cout << "Day:\n";
+		cin >> day;
+		cout << "Hour:\n";
+		cin >> hour;
+
+		// Time struct definitions
+		date.tm_year = year;
+		date.tm_mon = month;
+		date.tm_mday = day;
+		date.tm_hour = hour;
+		mktime(&date);
+		startTime = date;
+		break;
 	case 3:
-
+		cout << "Please input the new facility ID for the facility your reservation will be in:\n";
+		cin >> facId;
+		facilityId = facId;
+		break;
 	}
+
+	cout << "Your reservation has been updated.\n";
 
 }
 
