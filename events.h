@@ -19,7 +19,7 @@ private:
 public:
         Events(int id, std::string title, std::string description, int expectedAttendance, std::string eventType);
         ~Events();
-        void updateDetails();
+        void updateDetails(std::string title, std::string description, int expectedAttendance, std::string eventType);
         bool validateRequirements();
         void viewEvent();
 };
