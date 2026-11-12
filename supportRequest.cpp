@@ -21,6 +21,27 @@ SupportRequest::~SupportRequest()
 // Create new support request
 void SupportRequest::requestSupport()
 {
+	cout << "To create a new support request, you will need to create a unique support ID number and describe the nature of your problem and the type of support it requires. Respond to each prompt as it appears.\n";
+
+	int id;
+	std::string desc;
+	std::string type;
+
+	cout << "Please input the support ID for your request as an integer:\n";
+	cin >> id;
+	supportId = id;
+
+	cout << "Please describe your problem succinctly:\n";
+	cin >> desc;
+	description = desc;
+
+	cout << "Please describe the type of support you are requesting for your problem: \n";
+	cin >> type;
+	supportType = type;
+
+	status = "pending";
+
+	cout << "Your support request has been created!\n";
 }
 
 // Update status of a request
