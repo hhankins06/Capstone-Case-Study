@@ -7,7 +7,7 @@
 #include <string>
 #include <ctime>
 
-//Class declaration
+// Class declaration
 class Reservation
 {
 private:
@@ -21,16 +21,16 @@ public:
     std::time_t startTime;
     std::time_t endTime;
 
-    //Constructor and Destructor
+    // Constructor and Destructor
     Reservation(int id, int facId, std::time_t start, std::time_t end, std::time_t created);
     ~Reservation();
 
-    //Functions
+    // Functions
     void submit();
     void modify();
     void cancel();
     void updateStatus();
+    void viewReservation();
 };
-
 
 #endif

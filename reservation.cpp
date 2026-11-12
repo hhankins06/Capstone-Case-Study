@@ -199,3 +199,13 @@ void Reservation::updateStatus()
 		approved = false;
 	}
 }
+void Reservation::viewReservation()
+{
+	cout << "\nReservation (" << reservationId << ")\n";
+	cout << "Facility ID: " << facilityId << endl;
+	cout << "Start Time: " << ctime(&startTime);
+	cout << "End Time: " << ctime(&endTime);
+	cout << "Created At: " << ctime(&createdAt);
+	cout << "Status: " << status << endl;
+	cout << "Approved: " << (approved ? "Yes" : "No") << endl;
+}

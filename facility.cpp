@@ -1,30 +1,29 @@
-#include "Facility.h"
-#include "Reservation.h" 
+#include "facility.h"
+#include "reservation.h"
 #include <iostream>
 
 // Constructor implementation
-Facility::Facility(int facilityID, const std::string& name, const std::string& location, int capacity, const std::string& description, bool approved): 
-    facilityID(facilityID), 
-    facilityName(name), 
-    location(location), 
-    capacity(capacity), 
-    description(description), 
-    approved(approved) {}
+Facility::Facility(int facilityID, const std::string &name, const std::string &location, int capacity, const std::string &description, bool approved) : facilityID(facilityID),
+                                                                                                                                                        facilityName(name),
+                                                                                                                                                        location(location),
+                                                                                                                                                        capacity(capacity),
+                                                                                                                                                        description(description),
+                                                                                                                                                        approved(approved) {}
 
 // Check the availability
 bool Facility::checkAvailability(std::time_t start, std::time_t end) const
 {
-    if (!approved || start >= end) 
+    if (!approved || start >= end)
     {
         return false;
     }
 
     // Create a viewable schedule
     std::vector<Reservation> schedule = viewSchedule();
-    for (auto& res : schedule) 
+    for (auto &res : schedule)
     {
         // Overlap if requested start was before existing end & requested end was after existing start
-        if (start < res.endTime && end > res.startTime) 
+        if (start < res.endTime && end > res.startTime)
         {
             return false;
         }
@@ -34,7 +33,7 @@ bool Facility::checkAvailability(std::time_t start, std::time_t end) const
 }
 
 // Update the details
-void Facility::updateDetails() 
+void Facility::updateDetails()
 {
     std::cout << "Updating details for facility " << facilityName << ":\n";
 
@@ -58,7 +57,7 @@ void Facility::updateDetails()
 
     std::cout << "\nIs this facility approved? (1 for Yes, 0 for No): ";
     int appInput;
-    if (std::cin >> appInput) 
+    if (std::cin >> appInput)
     {
         approved = (appInput == 1);
     }
@@ -74,7 +73,7 @@ std::vector<Reservation> Facility::viewSchedule() const
     // Example for now
     std::time_t now = std::time(nullptr);
     // Brand new object via emplace_back
-    schedule.emplace_back(607, facilityID, now + 3600, now + 10800);
+    schedule.emplace_back(607, facilityID, now + 3600, now + 10800, now);
     return schedule;
 }
 
@@ -85,7 +84,7 @@ std::string Facility::getLocation() const
     return location;
 }
 
-void Facility::setLocation(const std::string& newLocation) 
+void Facility::setLocation(const std::string &newLocation)
 {
     location = newLocation;
 }
@@ -95,9 +94,9 @@ int Facility::getCapacity() const
     return capacity;
 }
 
-void Facility::setCapacity(int newCapacity) 
+void Facility::setCapacity(int newCapacity)
 {
-    if (newCapacity >= 0) 
+    if (newCapacity >= 0)
     {
         capacity = newCapacity;
     }
@@ -108,7 +107,7 @@ std::string Facility::getDescription() const
     return description;
 }
 
-void Facility::setDescription(const std::string& newDescription) 
+void Facility::setDescription(const std::string &newDescription)
 {
     description = newDescription;
 }

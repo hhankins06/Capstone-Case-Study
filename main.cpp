@@ -3,8 +3,10 @@
 #include "events.h"
 #include "user.h"
 #include "facility.h"
+#include "reservation.h"
 #include <iostream>
 #include <vector>
+#include <ctime>
 using namespace std;
 
 void printMenu()
@@ -156,9 +158,42 @@ void viewFacilities(Facility &lab)
         }
     }
 }
-void viewReservations()
+void viewReservations(vector<Reservation> &reservations)
 {
-    // FIXME
+    for (int i = 0; i < reservations.size(); ++i)
+    {
+        reservations[i].viewReservation();
+    }
+
+    cout << "Please select one of the following options:\n";
+    cout << "1. Return to Menu\n";
+    cout << "2. Modify reservation\n";
+    cout << "3. Cancel reservation\n";
+    cout << "4. Update reservation status\n";
+
+    int choice, id;
+    cin >> choice;
+
+    switch (choice)
+    {
+    case 1:
+        return;
+    case 2:
+        cout << "Enter reservation ID number: ";
+        cin >> id;
+        reservations[id - 1].modify();
+        break;
+    case 3:
+        cout << "Enter reservation ID number: ";
+        cin >> id;
+        reservations[id - 1].cancel();
+        break;
+    case 4:
+        cout << "Enter reservation ID number: ";
+        cin >> id;
+        reservations[id - 1].updateStatus();
+        break;
+    }
 }
 void viewEquipment(vector<EquipmentRequest> &requests)
 {
@@ -202,7 +237,7 @@ void viewEquipment(vector<EquipmentRequest> &requests)
 }
 void viewSupport()
 {
-    // FIXME
+    // FIXME: Sophia
 }
 
 int main()
@@ -224,6 +259,11 @@ int main()
 
     Facility lab(505, "AM Lab", "Electrical Engineering Building, 5th Floor", 35, "This facility combines music and electricity, with guitars to utilize.", true);
 
+    time_t now = time(nullptr);
+    vector<Reservation> reservations;
+    reservations.push_back(Reservation(1, 101, now, now + 3600, now));
+    reservations.push_back(Reservation(2, 102, now + 86400, now + 93600, now));
+
     cout << "Welcome to the Smart Campus Event & Facility Booking System!\n";
     string email, pass;
     bool loggedIn = false;
@@ -235,7 +275,6 @@ int main()
         getline(cin, pass);
         if (user1.login(email, pass))
         {
-            cout << "\nSuccessfully logged in.\n";
             loggedIn = true;
             break;
         }
@@ -260,7 +299,7 @@ int main()
             viewFacilities(lab);
             break;
         case 3:
-            viewReservations();
+            viewReservations(reservations);
             break;
         case 4:
             viewEquipment(requests);
