@@ -2,14 +2,9 @@
 #include <iostream>
 using namespace std;
 
-Events::Events(int id, std::string title, std::string description, int expectedAttendance, std::string eventType)
+Events::Events(int id, std::string title, std::string description, int expectedAttendance, std::string eventType) : eventId(id), title(title), description(description), expectedAttendance(expectedAttendance), eventType(eventType), approved(false)
 {
-    eventId = id;
-    title = title;
-    description = description;
-    expectedAttendance = expectedAttendance;
-    eventType = eventType;
-    approved = false;
+
 }
 
 Events::~Events()
