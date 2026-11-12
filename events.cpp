@@ -30,3 +30,12 @@ bool Events::validateRequirements()
 {
     return true;
 }
+
+void Events::viewEvent()
+{
+    cout << "\nEvent (" << eventId << ")\n";
+    cout << "Title: " << title << endl;
+    cout << "Description: " << description << endl;
+    cout << "Expected Attendance: " << expectedAttendance << endl;
+    cout << "Event Type: " << eventType << endl;
+}

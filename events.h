@@ -15,11 +15,13 @@ private:
 
         void updateDetails();
         bool validateRequirements();
+
 public:
         Events(int id, std::string title, std::string description, int expectedAttendance, std::string eventType);
         ~Events();
         void updateDetails();
         bool validateRequirements();
+        void viewEvent();
 };
 
 #endif
