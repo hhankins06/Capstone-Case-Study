@@ -6,14 +6,14 @@
 
 using namespace std;
 
-// Constructor
+//Constructor
 SupportRequest::SupportRequest(int id)
 {
-	supportId = id;
+	supportID = id;
 	status = "pending";
 }
 
-// Destructor
+//Destructor
 SupportRequest::~SupportRequest()
 {
 }
@@ -22,7 +22,7 @@ SupportRequest::~SupportRequest()
 void SupportRequest::requestSupport()
 {
 	cout << "To create a new support request, you will need to create a unique support ID number and describe the nature of your problem and the type of support it requires. Respond to each prompt as it appears.\n";
-
+	
 	int id;
 	std::string desc;
 	std::string type;
@@ -32,17 +32,18 @@ void SupportRequest::requestSupport()
 	supportId = id;
 
 	cout << "Please describe your problem succinctly:\n";
-	cin >> desc;
+	getline(cin, desc);
 	description = desc;
 
 	cout << "Please describe the type of support you are requesting for your problem: \n";
-	cin >> type;
+	getline(cin, type);
 	supportType = type;
 
 	status = "pending";
 
 	cout << "Your support request has been created!\n";
 }
+
 
 // Update status of a request
 void SupportRequest::updateStatus()
@@ -84,7 +85,7 @@ void SupportRequest::cancelRequest()
 		{
 			cout << "Okay, your support request has been cancelled.\n";
 			status = "cancelled";
-			// approved = false;
+			approved = false;
 		}
 		else
 		{
@@ -95,10 +96,4 @@ void SupportRequest::cancelRequest()
 	{
 		cout << "Okay, no update was made to your support request.\n";
 	}
-}
-
-void SupportRequest::view()
-{
-	cout << "\nSupport Request (" << supportId << ")\n";
-	cout << "Status: " << status << endl;
 }
