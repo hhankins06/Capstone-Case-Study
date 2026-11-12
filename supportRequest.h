@@ -6,7 +6,7 @@
 
 #include <string>
 
-//Class declaration
+// Class declaration
 class SupportRequest
 {
 public:
@@ -15,15 +15,15 @@ public:
     std::string description;
     std::string status;
 
-    //Constructor and Destructor
+    // Constructor and Destructor
     SupportRequest(int id);
     ~SupportRequest();
 
-    //Functions
+    // Functions
     void requestSupport();
     void cancelRequest();
     void updateStatus();
+    void view();
 };
-
 
 #endif

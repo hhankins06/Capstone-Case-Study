@@ -4,6 +4,7 @@
 #include "user.h"
 #include "facility.h"
 #include "reservation.h"
+#include "supportRequest.h"
 #include <iostream>
 #include <vector>
 #include <ctime>
@@ -235,9 +236,36 @@ void viewEquipment(vector<EquipmentRequest> &requests)
         break;
     }
 }
-void viewSupport()
+void viewSupport(vector<SupportRequest> &requests)
 {
-    // FIXME: Sophia
+    for (int i = 0; i < requests.size(); ++i)
+    {
+        requests[i].view();
+    }
+
+    cout << "Please select one of the following options:\n";
+    cout << "1. Return to Menu\n";
+    cout << "2. Update request status\n";
+    cout << "3. Cancel request\n";
+
+    int choice, id;
+    cin >> choice;
+
+    switch (choice)
+    {
+    case 1:
+        return;
+    case 2:
+        cout << "Enter support request ID number: ";
+        cin >> id;
+        requests[id - 1].updateStatus();
+        break;
+    case 3:
+        cout << "Enter support request ID number: ";
+        cin >> id;
+        requests[id - 1].cancelRequest();
+        break;
+    }
 }
 
 int main()
@@ -263,6 +291,10 @@ int main()
     vector<Reservation> reservations;
     reservations.push_back(Reservation(1, 101, now, now + 3600, now));
     reservations.push_back(Reservation(2, 102, now + 86400, now + 93600, now));
+
+    vector<SupportRequest> supportRequests;
+    supportRequests.push_back(SupportRequest(1));
+    supportRequests.push_back(SupportRequest(2));
 
     cout << "Welcome to the Smart Campus Event & Facility Booking System!\n";
     string email, pass;
@@ -305,7 +337,7 @@ int main()
             viewEquipment(requests);
             break;
         case 5:
-            viewSupport();
+            viewSupport(supportRequests);
             break;
         case 6:
             exit(0);
