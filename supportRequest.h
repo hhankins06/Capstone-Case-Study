@@ -17,7 +17,7 @@ public:
 
     //Constructor and Destructor
     SupportRequest(int id);
-    ~Reservation();
+    ~SupportRequest();
 
     //Functions
     void requestSupport();
