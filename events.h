@@ -13,8 +13,8 @@ private:
         std::string eventType;
         bool approved;
 
-        void updateDetails();
-        bool validateRequirements();
+        // void updateDetails();
+        // bool validateRequirements();
 
 public:
         Events(int id, std::string title, std::string description, int expectedAttendance, std::string eventType);

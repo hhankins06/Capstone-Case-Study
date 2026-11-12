@@ -13,11 +13,11 @@ void printLogin()
     {
         cout << "Please enter your username: ";
         getline(cin, user);
-        cout << "Please enter your password: ";
+        cout << "\nPlease enter your password: ";
         getline(cin, pass);
         // if (userExists && passCorrect)
         //{
-        cout << "Successfully logged in.\n";
+        cout << "\nSuccessfully logged in.\n";
         break;
         //}
     }
@@ -55,6 +55,39 @@ void viewEquipment(vector<EquipmentRequest> &requests)
     {
         requests[i].viewRequest();
     }
+    cout << "Please select one of the following options:\n";
+    cout << "1. Return to Menu\n";
+    cout << "2. Modify request\n";
+    cout << "3. Cancel request\n";
+    cout << "4. Approve request\n";
+    cout << "5. Reject request\n";
+    int choice, id;
+    cin >> choice;
+    switch (choice)
+    {
+    case (1):
+        return;
+    case (2):
+        cout << "Enter request ID number: ";
+        cin >> id;
+        requests[id - 1].modifyRequest();
+        break;
+    case (3):
+        cout << "Enter request ID number: ";
+        cin >> id;
+        requests[id - 1].cancelRequest();
+        break;
+    case (4):
+        cout << "Enter request ID number: ";
+        cin >> id;
+        requests[id - 1].approve();
+        break;
+    case (5):
+        cout << "Enter request ID number: ";
+        cin >> id;
+        requests[id - 1].reject();
+        break;
+    }
 }
 void viewSupport()
 {
@@ -63,7 +96,7 @@ void viewSupport()
 
 int main()
 {
-    int choice;
+    int choice = 0;
 
     // Variable Declaration
     // Basic testing input to verify system function
@@ -77,29 +110,32 @@ int main()
     requests.push_back(EquipmentRequest(2, "Lights", 5));
 
     printLogin();
-    printMenu();
-    cin >> choice;
-    switch (choice)
+    while (choice != 6)
     {
-    case 1:
-        viewEvents(events);
-        break;
-    case 2:
-        viewFacilities();
-        break;
-    case 3:
-        viewReservations();
-        break;
-    case 4:
-        viewEquipment(requests);
-        break;
-    case 5:
-        viewSupport();
-        break;
-    case 6:
-        exit(0);
-        break;
-    default:
-        break;
+        printMenu();
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            viewEvents(events);
+            break;
+        case 2:
+            viewFacilities();
+            break;
+        case 3:
+            viewReservations();
+            break;
+        case 4:
+            viewEquipment(requests);
+            break;
+        case 5:
+            viewSupport();
+            break;
+        case 6:
+            exit(0);
+            break;
+        default:
+            break;
+        }
     }
 }
