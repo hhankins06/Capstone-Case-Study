@@ -12,11 +12,11 @@ class Reservation
 {
 private:
     std::time_t createdAt;
-    int reservationId;
-    int facilityId;
     bool approved;
 
 public:
+    int reservationId;
+    int facilityId;
     std::string status;
     std::time_t startTime;
     std::time_t endTime;
